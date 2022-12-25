@@ -1,6 +1,6 @@
 <html>
 <body>
-<h2>Webhook test!</h2>
+<h2>deploy works!</h2>
 test new commit
 </body>
 </html>
