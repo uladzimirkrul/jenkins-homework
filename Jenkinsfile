@@ -1,12 +1,20 @@
 pipeline {
     agent any
     environment {
-        GitHubUser = credentials('jenkins-ssh')
+
     }
     stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'master',
+                        credentialsId: 'jenkins-ssh',
+                        url: 'ssh://git@github.com:uladzimirkrul/jenkins-homework.git'
+                sh "ls -lat"
+            }
+        }
         stage('Build') {
             steps {
-                sh 'mvn -f hello-app/pom.xml -B -DskipTests clean package'
+                sh 'mvn -f pom.xml -B -DskipTests clean package'
             }
             post {
                 success {
@@ -15,11 +23,11 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'mvn -f hello-app/pom.xml test'
+                sh 'mvn -f pom.xml test'
             }
             post {
                 always {
-                    junit 'hello-app/target/surefire-reports/*.xml'
+                    junit '/target/surefire-reports/*.xml'
                 }
             }
         }
