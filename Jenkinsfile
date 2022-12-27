@@ -1,13 +1,8 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'master',
-                        credentialsId: '35cccb33-e523-42b6-9c1d-d1aaa475ffbe',
-                        url: 'ssh://git@github.com:uladzimirkrul/jenkins-homework.git'
-                sh "ls -lat"
-            }
+        stage ('deploy-on-push-master - Checkout') {
+            checkout([$class: 'GitSCM', branches: [[name: 'refs/heads/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '35cccb33-e523-42b6-9c1d-d1aaa475ffbe', url: 'git@github.com:uladzimirkrul/jenkins-homework']]])
         }
         stage('Build') {
             steps {
