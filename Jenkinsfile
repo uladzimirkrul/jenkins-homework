@@ -4,7 +4,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'master',
-                        credentialsId: 'jenkins-ssh',
+                        credentialsId: '35cccb33-e523-42b6-9c1d-d1aaa475ffbe',
                         url: 'ssh://git@github.com:uladzimirkrul/jenkins-homework.git'
                 sh "ls -lat"
             }
