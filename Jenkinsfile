@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage ('deploy-on-push-master - Checkout') {
+        stage ('Checkout') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: 'refs/heads/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '35cccb33-e523-42b6-9c1d-d1aaa475ffbe', url: 'git@github.com:uladzimirkrul/jenkins-homework']]])
         
@@ -22,9 +22,15 @@ pipeline {
                 sh 'mvn -f pom.xml test'
             }
             post {
-                always {
-                    junit '/target/surefire-reports/*.xml'
+                success {
+                    echo 'successful test'
                 }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                ssh-agent(['d7f18c71-8098-4ce7-b2b1-69a93587bb10'])
+                sh "scp -o StrictHostChecking=no **/*.war tomcat@192.168.10.234:~latest/webapps"
             }
         }
     }
