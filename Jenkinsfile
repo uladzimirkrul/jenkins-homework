@@ -29,7 +29,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sshagent(credentials: ['d7f18c71-8098-4ce7-b2b1-69a93587bb10']) {
+                sshagent(credentials: ['tomcat-ssh']) {
                     sh "scp -o StrictHostKeyChecking=no **/*.war deploy@192.168.10.234:~latest/webapps"
                 }
             }
