@@ -29,7 +29,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                ssh-agent(['d7f18c71-8098-4ce7-b2b1-69a93587bb10'])
+                sshagent(['d7f18c71-8098-4ce7-b2b1-69a93587bb10'])
                 sh "scp -o StrictHostChecking=no **/*.war tomcat@192.168.10.234:~latest/webapps"
             }
         }
